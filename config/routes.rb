@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :coach_student_bookings
       resources :students
       resources :coaches
+      get 'users', to: 'users#index', as: :users
     end
   end
 
