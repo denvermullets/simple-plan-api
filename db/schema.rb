@@ -25,11 +25,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_21_110137) do
 
   create_table "coach_student_bookings", force: :cascade do |t|
     t.bigint "coach_id", null: false
-    t.bigint "student_id", null: false
-    t.date "date"
-    t.time "start_at"
-    t.time "end_at"
-    t.boolean "completed"
+    t.bigint "student_id"
+    t.datetime "date"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.boolean "completed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["coach_id"], name: "index_coach_student_bookings_on_coach_id"

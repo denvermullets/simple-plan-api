@@ -8,12 +8,18 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-coach_one = Coach.create(first_name: 'Adam', last_name: 'Smith', slug: 'coach' )
-coach_two = Coach.create(first_name: 'Jason', last_name: 'Sudeakis', slug: 'coach' )
-student_one = Student.create(first_name: 'Jamie', last_name: 'Lannister', slug: 'student')
-student_two = Student.create(first_name: 'Tyrion', last_name: 'Lannister', slug: 'student')
+start_at = Time.new(Time.now.year, Time.now.month, Time.now.day, 10, 0)
 
-booking_one = CoachStudentBooking.create(coach: coach_one, student: student_two)
-booking_two = CoachStudentBooking.create(coach: coach_two, student: student_one)
+coach_one = Coach.create(first_name: 'Adam', last_name: 'Smith', slug: 'coaches' )
+coach_two = Coach.create(first_name: 'Jason', last_name: 'Sudeakis', slug: 'coaches' )
+student_one = Student.create(first_name: 'Jamie', last_name: 'Lannister', slug: 'students')
+student_two = Student.create(first_name: 'Tyrion', last_name: 'Lannister', slug: 'students')
+
+booking_one = CoachStudentBooking.create(
+  coach: coach_one, student: student_two, date: Date.today, start_at:, end_at: start_at + 2.hours
+)
+booking_two = CoachStudentBooking.create(
+  coach: coach_two, student: student_one, date: Date.today, start_at:, end_at: start_at + 2.hours
+)
 
 session_review = CoachStudentBookingReview.create(coach_student_booking: booking_one, score: 5)

@@ -1,7 +1,7 @@
 module Api
   module V1
     class CoachesController < ApplicationController
-      before_action :set_coach, only: %i[ show update destroy ]
+      before_action :set_coach, only: %i[show update]
 
       # GET /coaches
       def index
@@ -12,7 +12,17 @@ module Api
 
       # GET /coaches/1
       def show
-        render json: @coach
+        coach_info = @coach.as_json(
+          include: {
+            coach_student_bookings: {
+              include: { student: { only: %i[first_name last_name] } },
+              except: %i[created_at updated_at] },
+            coach_student_booking_reviews: { except: %i[created_at updated_at] }
+          },
+          except: %i[created_at updated_at]
+        )
+
+        render json: coach_info, status: :ok
       end
 
       # POST /coaches
@@ -35,21 +45,16 @@ module Api
         end
       end
 
-      # DELETE /coaches/1
-      def destroy
-        @coach.destroy!
-      end
 
       private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_coach
-          @coach = Coach.find(params[:id])
-        end
 
-        # Only allow a list of trusted parameters through.
-        def coach_params
-          params.require(:coach).permit(:first_name, :last_name, :slug)
-        end
+      def set_coach
+        @coach = Coach.find(params[:id])
+      end
+
+      def coach_params
+        params.require(:coach).permit(:first_name, :last_name, :slug)
+      end
     end
   end
 end
