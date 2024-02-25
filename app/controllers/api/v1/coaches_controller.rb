@@ -16,7 +16,8 @@ module Api
           include: {
             coach_student_bookings: {
               include: { student: { only: %i[first_name last_name] } },
-              except: %i[created_at updated_at] },
+              except: %i[created_at updated_at]
+            },
             coach_student_booking_reviews: { except: %i[created_at updated_at] }
           },
           except: %i[created_at updated_at]

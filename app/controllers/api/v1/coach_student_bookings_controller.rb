@@ -29,7 +29,7 @@ module Api
       # PATCH/PUT /coach_student_bookings/1
       def update
         if @coach_student_booking.update(coach_student_booking_params)
-          render json: @coach_student_booking
+          render json: @coach_student_booking, status: :ok
         else
           render json: @coach_student_booking.errors, status: :unprocessable_entity
         end
@@ -38,6 +38,16 @@ module Api
       # DELETE /coach_student_bookings/1
       def destroy
         @coach_student_booking.destroy!
+      end
+
+      def available_sessions
+        sessions = CoachStudentBooking.available_sessions(params[:date])
+
+        session_info = sessions.as_json(
+          include: { coach: { only: %i[first_name last_name] } }
+        )
+
+        render json: session_info, status: :ok
       end
 
       private
