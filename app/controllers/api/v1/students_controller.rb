@@ -1,7 +1,7 @@
 module Api
   module V1
     class StudentsController < ApplicationController
-      before_action :set_student, only: %i[ show update destroy ]
+      before_action :set_student, only: %i[show update destroy]
 
       # GET /students
       def index
@@ -12,7 +12,17 @@ module Api
 
       # GET /students/1
       def show
-        render json: @student
+        student_info = @student.as_json(
+          include: {
+            coach_student_bookings: {
+              include: { coach: { only: %i[first_name last_name] } },
+              except: %i[created_at updated_at]
+            }
+          },
+          except: %i[created_at updated_at]
+        )
+
+        render json: student_info, status: :ok
       end
 
       # POST /students
