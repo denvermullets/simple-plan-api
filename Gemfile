@@ -5,6 +5,7 @@ ruby '3.3.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'bootsnap', require: false
 gem 'pg', '~> 1.1'
+gem 'pry-byebug'
 gem 'puma', '>= 5.0'
 gem 'rack-cors'
 gem 'rails', '~> 7.1.3'
