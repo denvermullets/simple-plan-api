@@ -45,6 +45,13 @@ module Api
         end
       end
 
+      def available_session_slots
+        hours_available = CoachSession::AvailableSlots.call(
+          coach_id: params[:coach_id], date: params[:date], time_zone: params[:time_zone]
+        )
+
+        render json: { available_start_times: hours_available }, status: :ok
+      end
 
       private
 
